@@ -1,0 +1,11 @@
+Arduino IDE
+
+MPU6050 Library
+
+Wire Library
+
+Kalman Library
+
+L298N Driver
+
+PlatformIO (Optional)
