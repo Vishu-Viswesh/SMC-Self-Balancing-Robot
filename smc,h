@@ -1,0 +1,19 @@
+#ifndef SMC_H
+#define SMC_H
+
+class SlidingModeController
+{
+public:
+
+    SlidingModeController();
+
+    float compute(float angle,
+                  float angularVelocity,
+                  float reference);
+
+private:
+
+    float saturation(float value);
+};
+
+#endif
