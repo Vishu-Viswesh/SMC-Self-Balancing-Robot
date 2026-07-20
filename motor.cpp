@@ -1,22 +1,62 @@
-#ifndef MOTOR_H
-#define MOTOR_H
+#include <Arduino.h>
+#include "config.h"
+#include "motor.h"
 
-class Motor
+void Motor::begin()
 {
-public:
+    pinMode(ENA, OUTPUT);
+    pinMode(IN1, OUTPUT);
+    pinMode(IN2, OUTPUT);
 
-    void begin();
+    pinMode(ENB, OUTPUT);
+    pinMode(IN3, OUTPUT);
+    pinMode(IN4, OUTPUT);
+}
 
-    void move(int leftPWM, int rightPWM);
+void Motor::driveLeft(int pwm)
+{
+    pwm = constrain(pwm,-255,255);
 
-    void stop();
+    if(pwm>=0)
+    {
+        digitalWrite(IN1,HIGH);
+        digitalWrite(IN2,LOW);
+        analogWrite(ENA,pwm);
+    }
+    else
+    {
+        digitalWrite(IN1,LOW);
+        digitalWrite(IN2,HIGH);
+        analogWrite(ENA,-pwm);
+    }
+}
 
-private:
+void Motor::driveRight(int pwm)
+{
+    pwm = constrain(pwm,-255,255);
 
-    void driveLeft(int pwm);
+    if(pwm>=0)
+    {
+        digitalWrite(IN3,HIGH);
+        digitalWrite(IN4,LOW);
+        analogWrite(ENB,pwm);
+    }
+    else
+    {
+        digitalWrite(IN3,LOW);
+        digitalWrite(IN4,HIGH);
+        analogWrite(ENB,-pwm);
+    }
+}
 
-    void driveRight(int pwm);
+void Motor::move(int leftPWM,int rightPWM)
+{
+    driveLeft(leftPWM);
+    driveRight(rightPWM);
+}
 
-};
-
-#endif
+void Motor::stop()
+{
+    analogWrite(ENA,0);
+    analogWrite(ENB,0);
+}
